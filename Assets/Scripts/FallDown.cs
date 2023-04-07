@@ -15,6 +15,7 @@ public class FallDown : MonoBehaviour
     public Button closeBtn;
     public Button startBtn;
 
+    public TextMeshProUGUI scoreLabel;
     public TextMeshProUGUI scoreValue;
     public TextMeshProUGUI mistakesValue;
 
@@ -44,6 +45,7 @@ public class FallDown : MonoBehaviour
     void Start()
     {
         mistakesValue.text = "";
+        scoreLabel.gameObject.SetActive(false);
         setVisibilityButtons(false);
         changeVisibilityForImages(false, false, false, false, false);
     }
@@ -59,6 +61,7 @@ public class FallDown : MonoBehaviour
 
         if (mistakes == 3)
         {
+            Cursor.visible = true;
             setVisibilityButtons(true);
         }
         if (Time.time - lastSpawnTime > spawnInterval && mistakes < 3 && start)
@@ -78,8 +81,11 @@ public class FallDown : MonoBehaviour
                     bottle.transform.position.z > chestLocalPos.z - 2f &&
                     bottle.transform.position.z < chestLocalPos.z + 2f)
                 {
-                    score++;
-                    handleScore();
+                    if (mistakes != 3)
+                    {
+                        score++;
+                        handleScore();
+                    }
                 }
                 else
                 {
@@ -187,6 +193,8 @@ public class FallDown : MonoBehaviour
         scoreValue.text = score.ToString();
         setVisibilityButtons(false);
 
+        Cursor.visible = false;
+
         changeVisibilityForImages(true, false, false, false, false);
     }
 
@@ -198,6 +206,8 @@ public class FallDown : MonoBehaviour
     public void onClickStart()
     {
         start = true;
+        Cursor.visible = false;
+        scoreLabel.gameObject.SetActive(true);
         startBtn.gameObject.SetActive(false);
         changeVisibilityForImages(true, false, false, false, false); ;
     }

@@ -19,13 +19,11 @@ public class MoveChest : MonoBehaviour
 
     void OnEnable()
     {
-        // Enable mouse input actions
         InputSystem.EnableDevice(Mouse.current);
     }
 
     void OnDisable()
     {
-        // Disable mouse input actions
         InputSystem.DisableDevice(Mouse.current);
     }
 
